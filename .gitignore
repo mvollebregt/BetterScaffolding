@@ -1,5 +1,10 @@
 .project
 .settings
 .classpath
+.idea
+*.iml
+target
+web-app/WEB-INF/tld/c.tld
+web-app/WEB-INF/tld/fmt.tld
 
 *.swp
