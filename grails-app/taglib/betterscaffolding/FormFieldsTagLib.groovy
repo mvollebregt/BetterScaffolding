@@ -15,12 +15,16 @@ class FormFieldsTagLib {
     def field = { attrs, body ->
         Object bean = attrs.bean
         String property = attrs.property;
-        def beanClass = classNameWithoutPackage(bean.class.name)
-        def propertyClass = classNameWithoutPackage(bean.class.getMethod("get${property.capitalize()}").returnType.name)
-        def messageCode = decapitalize("${beanClass}.${property}.label")
+        String beanClassName = classNameWithoutPackage(bean.class.name)
+        Class propertyClass = bean.class.getMethod("get${property.capitalize()}").returnType
+        String propertyClassName = classNameWithoutPackage(propertyClass.name)
+        def messageCode = decapitalize("${beanClassName}.${property}.label")
         def defaultMessage = camelCaseToSpacedWords(property)
+        def template = propertyClass.isEnum() ?
+            tryTemplate("fieldValue${propertyClassName}", "fieldValueEnum", "fieldValue") :
+            tryTemplate("fieldValue${propertyClassName}", "fieldValue")
         out << render(
-                template: tryTemplate("fieldValue${propertyClass}", "fieldValue"),
+                template: template,
                 model: [bean: bean, property: property, code: messageCode, defaultValue: defaultMessage])
     }
 

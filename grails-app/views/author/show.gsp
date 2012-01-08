@@ -60,12 +60,7 @@
 
             </tr>
 
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="author.gender.label" default="Gender"/></td>
-
-                <td valign="top" class="value">${authorInstance?.gender?.encodeAsHTML()}</td>
-
-            </tr>
+            <gform:field bean="${authorInstance}" property="gender"/>
 
             </tbody>
         </table>
