@@ -21,13 +21,8 @@
             <div class="dialog">
                 <table>
                     <tbody>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="book.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: bookInstance, field: "id")}</td>
-                            
-                        </tr>
+
+                        <gform:field bean="${bookInstance}" property="id"/>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="book.author.label" default="Author" /></td>
@@ -49,13 +44,8 @@
                             <td valign="top" class="value"><g:formatDate date="${bookInstance?.publishingDate}" /></td>
                             
                         </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="book.title.label" default="Title" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: bookInstance, field: "title")}</td>
-                            
-                        </tr>
+
+                        <gform:field bean="${bookInstance}" property="title"/>
                     
                     </tbody>
                 </table>

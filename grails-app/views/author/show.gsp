@@ -1,3 +1,20 @@
+%{--
+  - This file is part of BetterScaffolding.
+  -
+  - BetterScaffolding is free software: you can redistribute it and/or modify
+  - it under the terms of the GNU General Public License as published by
+  - the Free Software Foundation, either version 3 of the License, or
+  - (at your option) any later version.
+  -
+  - BetterScaffolding is distributed in the hope that it will be useful,
+  - but WITHOUT ANY WARRANTY; without even the implied warranty of
+  - MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  - GNU General Public License for more details.
+  -
+  - You should have received a copy of the GNU General Public License
+  - along with BetterScaffolding.  If not, see <http://www.gnu.org/licenses/>.
+  --}%
+
 <%@ page import="betterscaffolding.Author" %>
 <html>
 <head>
@@ -26,26 +43,9 @@
         <table>
             <tbody>
 
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="author.id.label" default="Id"/></td>
-
-                <td valign="top" class="value">${fieldValue(bean: authorInstance, field: "id")}</td>
-
-            </tr>
-
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="author.lastName.label" default="Last Name"/></td>
-
-                <td valign="top" class="value">${fieldValue(bean: authorInstance, field: "lastName")}</td>
-
-            </tr>
-
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="author.firstName.label" default="First Name"/></td>
-
-                <td valign="top" class="value">${fieldValue(bean: authorInstance, field: "firstName")}</td>
-
-            </tr>
+            <gform:field bean="${authorInstance}" property="id"/>
+            <gform:field bean="${authorInstance}" property="lastName"/>
+            <gform:field bean="${authorInstance}" property="firstName"/>
 
             <tr class="prop">
                 <td valign="top" class="name"><g:message code="author.books.label" default="Books"/></td>
