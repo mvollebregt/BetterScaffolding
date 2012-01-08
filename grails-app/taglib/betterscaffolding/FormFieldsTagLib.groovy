@@ -1,5 +1,7 @@
 package betterscaffolding
 
+import static org.codehaus.groovy.grails.commons.GrailsResourceUtils.VIEWS_DIR_PATH as VIEWS
+
 class FormFieldsTagLib {
 
     static namespace = "gform"
@@ -11,13 +13,28 @@ class FormFieldsTagLib {
      * @attr property REQUIRED the bean property
      */
     def field = { attrs, body ->
-        def bean = attrs.bean
-        def property = attrs.property;
-        def fullClass = bean.class.name
-        def shortClass = decapitalize(fullClass.substring(fullClass.lastIndexOf(".") + 1))
-        def code = "${shortClass}.${property}.label"
-        def defaultValue = decamelize(property)
-        out << render(template:"/gform/fieldValue", model:[bean: bean, property: property, code: code, defaultValue: defaultValue])
+        Object bean = attrs.bean
+        String property = attrs.property;
+        def beanClass = classNameWithoutPackage(bean.class.name)
+        def propertyClass = classNameWithoutPackage(bean.class.getMethod("get${property.capitalize()}").returnType.name)
+        def messageCode = decapitalize("${beanClass}.${property}.label")
+        def defaultMessage = camelCaseToSpacedWords(property)
+        out << render(
+                template: tryTemplate("fieldValue${propertyClass}", "fieldValue"),
+                model: [bean: bean, property: property, code: messageCode, defaultValue: defaultMessage])
+    }
+
+    private String tryTemplate(Object[] templates) {
+        def template = templates.find { new File(VIEWS, "gform/_${it}.gsp").exists() }
+        if (template) {
+            "/gform/${template}"
+        } else {
+          throw new FileNotFoundException("In template directory ${VIEWS}gform, templates ${templates} were not found")
+        }
+    }
+
+    private String classNameWithoutPackage(String fullClass) {
+        fullClass.substring(fullClass.lastIndexOf(".") + 1)
     }
 
     /**
@@ -35,7 +52,7 @@ class FormFieldsTagLib {
     /**
      * Transforms camel case into single capitalized words.
      */
-    private String decamelize(String propertyName) {
+    private String camelCaseToSpacedWords(String propertyName) {
         return propertyName.
                 replaceAll(~"\\p{javaLowerCase}\\p{javaUpperCase}", {"${it[0]} ${it[1]}"}).
                 replaceAll(~"\\p{javaUpperCase}\\p{javaUpperCase}\\p{javaLowerCase}", {"${it[0]} ${it[1..2]}"}).

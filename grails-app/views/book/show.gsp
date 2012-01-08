@@ -30,21 +30,9 @@
                             <td valign="top" class="value"><g:link controller="author" action="show" id="${bookInstance?.author?.id}">${bookInstance?.author?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="book.available.label" default="Available" /></td>
-                            
-                            <td valign="top" class="value"><g:formatBoolean boolean="${bookInstance?.available}" /></td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="book.publishingDate.label" default="Publishing Date" /></td>
-                            
-                            <td valign="top" class="value"><g:formatDate date="${bookInstance?.publishingDate}" /></td>
-                            
-                        </tr>
 
+                        <gform:field bean="${bookInstance}" property="available"/>
+                        <gform:field bean="${bookInstance}" property="publishingDate"/>
                         <gform:field bean="${bookInstance}" property="title"/>
                     
                     </tbody>
