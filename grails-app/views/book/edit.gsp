@@ -39,27 +39,8 @@
                         </td>
                     </tr>
 
-                    <tr class="prop">
-                        <td valign="top" class="name">
-                            <label for="available"><g:message code="book.available.label" default="Available"/></label>
-                        </td>
-                        <td valign="top" class="value ${hasErrors(bean: bookInstance, field: 'available', 'errors')}">
-                            <g:checkBox name="available" value="${bookInstance?.available}"/>
-                        </td>
-                    </tr>
-
-                    <tr class="prop">
-                        <td valign="top" class="name">
-                            <label for="publishingDate"><g:message code="book.publishingDate.label"
-                                                                   default="Publishing Date"/></label>
-                        </td>
-                        <td valign="top"
-                            class="value ${hasErrors(bean: bookInstance, field: 'publishingDate', 'errors')}">
-                            <g:datePicker name="publishingDate" precision="day"
-                                          value="${bookInstance?.publishingDate}"/>
-                        </td>
-                    </tr>
-
+                    <gform:field property="available"/>
+                    <gform:field property="publishingDate"/>
                     <gform:field property="title"/>
                 </gform:form>
                 <div class="buttons">

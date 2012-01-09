@@ -20,6 +20,8 @@
         <label for="${property}"><g:message code="${code}" default="${defaultValue}"/></label>
     </td>
     <td valign="top" class="value ${hasErrors(bean: bean, field: property, 'errors')}">
-        <g:textField name="${property}" value="${bean?.getProperty(property)}"/>
+        <g:select name="${property}" from="${propertyClass?.values()}"
+                  keys="${propertyClass?.values()*.name()}"
+                  value="${bean?.getProperty(property)?.name()}"/>
     </td>
 </tr>

@@ -69,17 +69,7 @@
                 </td>
             </tr>
 
-            <tr class="prop">
-                <td valign="top" class="name">
-                    <label for="gender"><g:message code="author.gender.label" default="Gender"/></label>
-                </td>
-                <td valign="top" class="value ${hasErrors(bean: authorInstance, field: 'gender', 'errors')}">
-                    <g:select name="gender" from="${betterscaffolding.Gender?.values()}"
-                              keys="${betterscaffolding.Gender?.values()*.name()}"
-                              value="${authorInstance?.gender?.name()}"/>
-                </td>
-            </tr>
-
+            <gform:field property="gender"/>
         </gform:form>
 
         <div class="buttons">

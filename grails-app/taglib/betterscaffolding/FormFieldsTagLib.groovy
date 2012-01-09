@@ -43,7 +43,7 @@ class FormFieldsTagLib {
             tryTemplate("field${mode}${propertyClassName}", "field${mode}")
         out << render(
                 template: template,
-                model: [bean: bean, property: property, code: messageCode, defaultValue: defaultMessage])
+                model: [bean: bean, property: property, propertyClass: propertyClass, code: messageCode, defaultValue: defaultMessage])
     }
 
     private String tryTemplate(Object[] templates) {
