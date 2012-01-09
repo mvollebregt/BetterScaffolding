@@ -17,7 +17,13 @@ class FormFieldsTagLib {
     def form = { attrs, body ->
         if (request.getAttribute(FORM_ATTRIBUTES)) throw new Exception("gform:form tags cannot be nested") // TODO: better exception
         request.setAttribute(FORM_ATTRIBUTES, attrs)
-        out << render(template:  "/gform/form", model: [body: body()])
+        String mode = request.getAttribute(FORM_ATTRIBUTES).mode.capitalize()
+        def bean = request.getAttribute(FORM_ATTRIBUTES).bean
+        String beanClassName = classNameWithoutPackage(bean.class.name)
+        def messageCode = decapitalize("${beanClassName}.label")
+        def defaultMessage = camelCaseToSpacedWords(beanClassName)
+        def entityName = g.message(code: messageCode, default: defaultMessage)
+        out << render(template:  "/gform/form${mode}", model: [bean:  bean, body: body(), entityName: entityName])
         request.removeAttribute(FORM_ATTRIBUTES)
     }
 
