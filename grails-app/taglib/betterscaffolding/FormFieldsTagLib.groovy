@@ -6,14 +6,31 @@ class FormFieldsTagLib {
 
     static namespace = "gform"
 
+    private static FORM_ATTRIBUTES = "GFORM_FORM_ATTRIBUTES"
+
+    /**
+     * Defines a bean form.
+     *
+     * @attr bean     the bean object
+     */
+    def form = { attrs, body ->
+        if (request.getAttribute(FORM_ATTRIBUTES)) throw new Exception("gform:form tags cannot be nested") // TODO: better exception
+        request.setAttribute(FORM_ATTRIBUTES, attrs)
+        out << render(template:  "/gform/form", model: [body: body()])
+        request.removeAttribute(FORM_ATTRIBUTES)
+    }
+
     /**
      * Renders a field.
      *
-     * @attr bean     REQUIRED the bean object
+     * @attr bean     The bean object. Overrides the form bean attribute.
      * @attr property REQUIRED the bean property
      */
     def field = { attrs, body ->
+        if (!request.getAttribute(FORM_ATTRIBUTES)) throw new Exception("gform:field tag must be nested within gform:form tag") // TODO: better exception
         Object bean = attrs.bean
+        if (!bean) bean = request.getAttribute(FORM_ATTRIBUTES).bean
+        if (!bean) throw new Exception("bean must be specified on either gform:form or gform:field tag")  // TODO: better exception1
         String property = attrs.property;
         String beanClassName = classNameWithoutPackage(bean.class.name)
         Class propertyClass = bean.class.getMethod("get${property.capitalize()}").returnType

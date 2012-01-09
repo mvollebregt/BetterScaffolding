@@ -18,26 +18,23 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            <div class="dialog">
-                <table>
-                    <tbody>
 
-                        <gform:field bean="${bookInstance}" property="id"/>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="book.author.label" default="Author" /></td>
-                            
-                            <td valign="top" class="value"><g:link controller="author" action="show" id="${bookInstance?.author?.id}">${bookInstance?.author?.encodeAsHTML()}</g:link></td>
-                            
-                        </tr>
+            <gform:form bean="${bookInstance}">
+                <gform:field property="id"/>
 
-                        <gform:field bean="${bookInstance}" property="available"/>
-                        <gform:field bean="${bookInstance}" property="publishingDate"/>
-                        <gform:field bean="${bookInstance}" property="title"/>
-                    
-                    </tbody>
-                </table>
-            </div>
+                <tr class="prop">
+                    <td valign="top" class="name"><g:message code="book.author.label" default="Author"/></td>
+
+                    <td valign="top" class="value"><g:link controller="author" action="show"
+                                                           id="${bookInstance?.author?.id}">${bookInstance?.author?.encodeAsHTML()}</g:link></td>
+
+                </tr>
+
+                <gform:field property="available"/>
+                <gform:field property="publishingDate"/>
+                <gform:field property="title"/>
+            </gform:form>
+
             <div class="buttons">
                 <g:form>
                     <g:hiddenField name="id" value="${bookInstance?.id}" />

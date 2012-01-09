@@ -39,32 +39,27 @@
     <g:if test="${flash.message}">
         <div class="message">${flash.message}</div>
     </g:if>
-    <div class="dialog">
-        <table>
-            <tbody>
 
-            <gform:field bean="${authorInstance}" property="id"/>
-            <gform:field bean="${authorInstance}" property="lastName"/>
-            <gform:field bean="${authorInstance}" property="firstName"/>
+    <gform:form bean="${authorInstance}">
+        <gform:field property="id"/>
+        <gform:field property="lastName"/>
+        <gform:field property="firstName"/>
 
-            <tr class="prop">
-                <td valign="top" class="name"><g:message code="author.books.label" default="Books"/></td>
+        <tr class="prop">
+            <td valign="top" class="name"><g:message code="author.books.label" default="Books"/></td>
 
-                <td valign="top" style="text-align: left;" class="value">
-                    <ul>
-                        <g:each in="${authorInstance.books}" var="b">
-                            <li><g:link controller="book" action="show" id="${b.id}">${b?.encodeAsHTML()}</g:link></li>
-                        </g:each>
-                    </ul>
-                </td>
+            <td valign="top" style="text-align: left;" class="value">
+                <ul>
+                    <g:each in="${authorInstance.books}" var="b">
+                        <li><g:link controller="book" action="show" id="${b.id}">${b?.encodeAsHTML()}</g:link></li>
+                    </g:each>
+                </ul>
+            </td>
 
-            </tr>
+        </tr>
 
-            <gform:field bean="${authorInstance}" property="gender"/>
-
-            </tbody>
-        </table>
-    </div>
+        <gform:field property="gender"/>
+    </gform:form>
 
     <div class="buttons">
         <g:form>
