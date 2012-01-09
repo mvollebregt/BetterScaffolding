@@ -27,49 +27,41 @@
             <g:form method="post" >
                 <g:hiddenField name="id" value="${bookInstance?.id}" />
                 <g:hiddenField name="version" value="${bookInstance?.version}" />
-                <div class="dialog">
-                    <table>
-                        <tbody>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="author"><g:message code="book.author.label" default="Author" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: bookInstance, field: 'author', 'errors')}">
-                                    <g:select name="author.id" from="${betterscaffolding.Author.list()}" optionKey="id" value="${bookInstance?.author?.id}"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="available"><g:message code="book.available.label" default="Available" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: bookInstance, field: 'available', 'errors')}">
-                                    <g:checkBox name="available" value="${bookInstance?.available}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="publishingDate"><g:message code="book.publishingDate.label" default="Publishing Date" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: bookInstance, field: 'publishingDate', 'errors')}">
-                                    <g:datePicker name="publishingDate" precision="day" value="${bookInstance?.publishingDate}"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="title"><g:message code="book.title.label" default="Title" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: bookInstance, field: 'title', 'errors')}">
-                                    <g:textField name="title" value="${bookInstance?.title}" />
-                                </td>
-                            </tr>
-                        
-                        </tbody>
-                    </table>
-                </div>
+                <gform:form bean="${bookInstance}" mode="edit">
+
+                    <tr class="prop">
+                        <td valign="top" class="name">
+                            <label for="author"><g:message code="book.author.label" default="Author"/></label>
+                        </td>
+                        <td valign="top" class="value ${hasErrors(bean: bookInstance, field: 'author', 'errors')}">
+                            <g:select name="author.id" from="${betterscaffolding.Author.list()}" optionKey="id"
+                                      value="${bookInstance?.author?.id}"/>
+                        </td>
+                    </tr>
+
+                    <tr class="prop">
+                        <td valign="top" class="name">
+                            <label for="available"><g:message code="book.available.label" default="Available"/></label>
+                        </td>
+                        <td valign="top" class="value ${hasErrors(bean: bookInstance, field: 'available', 'errors')}">
+                            <g:checkBox name="available" value="${bookInstance?.available}"/>
+                        </td>
+                    </tr>
+
+                    <tr class="prop">
+                        <td valign="top" class="name">
+                            <label for="publishingDate"><g:message code="book.publishingDate.label"
+                                                                   default="Publishing Date"/></label>
+                        </td>
+                        <td valign="top"
+                            class="value ${hasErrors(bean: bookInstance, field: 'publishingDate', 'errors')}">
+                            <g:datePicker name="publishingDate" precision="day"
+                                          value="${bookInstance?.publishingDate}"/>
+                        </td>
+                    </tr>
+
+                    <gform:field property="title"/>
+                </gform:form>
                 <div class="buttons">
                     <span class="button"><g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>

@@ -47,60 +47,40 @@
     <g:form method="post">
         <g:hiddenField name="id" value="${authorInstance?.id}"/>
         <g:hiddenField name="version" value="${authorInstance?.version}"/>
-        <div class="dialog">
-            <table>
-                <tbody>
+        <gform:form bean="${authorInstance}" mode="edit">
+            <gform:field property="lastName"/>
+            <gform:field property="firstName"/>
 
-                <tr class="prop">
-                    <td valign="top" class="name">
-                        <label for="lastName"><g:message code="author.lastName.label" default="Last Name"/></label>
-                    </td>
-                    <td valign="top" class="value ${hasErrors(bean: authorInstance, field: 'lastName', 'errors')}">
-                        <g:textField name="lastName" value="${authorInstance?.lastName}"/>
-                    </td>
-                </tr>
+            <tr class="prop">
+                <td valign="top" class="name">
+                    <label for="books"><g:message code="author.books.label" default="Books"/></label>
+                </td>
+                <td valign="top" class="value ${hasErrors(bean: authorInstance, field: 'books', 'errors')}">
 
-                <tr class="prop">
-                    <td valign="top" class="name">
-                        <label for="firstName"><g:message code="author.firstName.label" default="First Name"/></label>
-                    </td>
-                    <td valign="top" class="value ${hasErrors(bean: authorInstance, field: 'firstName', 'errors')}">
-                        <g:textField name="firstName" value="${authorInstance?.firstName}"/>
-                    </td>
-                </tr>
+                    <ul>
+                        <g:each in="${authorInstance?.books ?}" var="b">
+                            <li><g:link controller="book" action="show"
+                                        id="${b.id}">${b?.encodeAsHTML()}</g:link></li>
+                        </g:each>
+                    </ul>
+                    <g:link controller="book" action="create"
+                            params="['author.id': authorInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'book.label', default: 'Book')])}</g:link>
 
-                <tr class="prop">
-                    <td valign="top" class="name">
-                        <label for="books"><g:message code="author.books.label" default="Books"/></label>
-                    </td>
-                    <td valign="top" class="value ${hasErrors(bean: authorInstance, field: 'books', 'errors')}">
+                </td>
+            </tr>
 
-                        <ul>
-                            <g:each in="${authorInstance?.books ?}" var="b">
-                                <li><g:link controller="book" action="show"
-                                            id="${b.id}">${b?.encodeAsHTML()}</g:link></li>
-                            </g:each>
-                        </ul>
-                        <g:link controller="book" action="create"
-                                params="['author.id': authorInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'book.label', default: 'Book')])}</g:link>
+            <tr class="prop">
+                <td valign="top" class="name">
+                    <label for="gender"><g:message code="author.gender.label" default="Gender"/></label>
+                </td>
+                <td valign="top" class="value ${hasErrors(bean: authorInstance, field: 'gender', 'errors')}">
+                    <g:select name="gender" from="${betterscaffolding.Gender?.values()}"
+                              keys="${betterscaffolding.Gender?.values()*.name()}"
+                              value="${authorInstance?.gender?.name()}"/>
+                </td>
+            </tr>
 
-                    </td>
-                </tr>
-
-                <tr class="prop">
-                    <td valign="top" class="name">
-                        <label for="gender"><g:message code="author.gender.label" default="Gender"/></label>
-                    </td>
-                    <td valign="top" class="value ${hasErrors(bean: authorInstance, field: 'gender', 'errors')}">
-                        <g:select name="gender" from="${betterscaffolding.Gender?.values()}"
-                                  keys="${betterscaffolding.Gender?.values()*.name()}"
-                                  value="${authorInstance?.gender?.name()}"/>
-                    </td>
-                </tr>
-
-                </tbody>
-            </table>
-        </div>
+        </gform:form>
 
         <div class="buttons">
             <span class="button"><g:actionSubmit class="save" action="update"

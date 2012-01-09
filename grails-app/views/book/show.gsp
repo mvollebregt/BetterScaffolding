@@ -19,7 +19,7 @@
             <div class="message">${flash.message}</div>
             </g:if>
 
-            <gform:form bean="${bookInstance}">
+            <gform:form bean="${bookInstance}" mode="show">
                 <gform:field property="id"/>
 
                 <tr class="prop">

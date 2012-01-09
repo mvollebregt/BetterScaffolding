@@ -11,7 +11,8 @@ class FormFieldsTagLib {
     /**
      * Defines a bean form.
      *
-     * @attr bean     the bean object
+     * @attr bean     REQUIRED the bean object
+     * @attr mode     REQUIRED the display mode of the form: show, edit or create
      */
     def form = { attrs, body ->
         if (request.getAttribute(FORM_ATTRIBUTES)) throw new Exception("gform:form tags cannot be nested") // TODO: better exception
@@ -28,9 +29,9 @@ class FormFieldsTagLib {
      */
     def field = { attrs, body ->
         if (!request.getAttribute(FORM_ATTRIBUTES)) throw new Exception("gform:field tag must be nested within gform:form tag") // TODO: better exception
+        String mode = request.getAttribute(FORM_ATTRIBUTES).mode.capitalize()
         Object bean = attrs.bean
         if (!bean) bean = request.getAttribute(FORM_ATTRIBUTES).bean
-        if (!bean) throw new Exception("bean must be specified on either gform:form or gform:field tag")  // TODO: better exception1
         String property = attrs.property;
         String beanClassName = classNameWithoutPackage(bean.class.name)
         Class propertyClass = bean.class.getMethod("get${property.capitalize()}").returnType
@@ -38,8 +39,8 @@ class FormFieldsTagLib {
         def messageCode = decapitalize("${beanClassName}.${property}.label")
         def defaultMessage = camelCaseToSpacedWords(property)
         def template = propertyClass.isEnum() ?
-            tryTemplate("fieldValue${propertyClassName}", "fieldValueEnum", "fieldValue") :
-            tryTemplate("fieldValue${propertyClassName}", "fieldValue")
+            tryTemplate("field${mode}${propertyClassName}", "field${mode}Enum", "field${mode}") :
+            tryTemplate("field${mode}${propertyClassName}", "field${mode}")
         out << render(
                 template: template,
                 model: [bean: bean, property: property, code: messageCode, defaultValue: defaultMessage])
