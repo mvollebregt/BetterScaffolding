@@ -27,6 +27,7 @@
 <body>
 
 <gform:form bean="${authorInstance}" mode="edit">
+    <gform:field property="id" visible="show"/>
     <gform:field property="lastName"/>
     <gform:field property="firstName"/>
 

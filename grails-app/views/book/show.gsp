@@ -9,7 +9,7 @@
 
 <body>
 <gform:form bean="${bookInstance}" mode="show">
-    <gform:field property="id"/>
+    <gform:field property="id" visible="show"/>
 
     <tr class="prop">
         <td valign="top" class="name"><g:message code="book.author.label" default="Author"/></td>

@@ -9,6 +9,7 @@
 
 <body>
 <gform:form bean="${bookInstance}" mode="edit">
+    <gform:field property="id" visible="show"/>
 
     <tr class="prop">
         <td valign="top" class="name">

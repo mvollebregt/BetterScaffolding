@@ -32,24 +32,28 @@ class FormFieldsTagLib {
      *
      * @attr bean     The bean object. Overrides the form bean attribute.
      * @attr property REQUIRED the bean property
+     * @attr visible  The form modes in which the field is visible (show, edit, create). Defaults to all.
      */
     def field = { attrs, body ->
         if (!request.getAttribute(FORM_ATTRIBUTES)) throw new Exception("gform:field tag must be nested within gform:form tag") // TODO: better exception
-        String mode = request.getAttribute(FORM_ATTRIBUTES).mode.capitalize()
-        Object bean = attrs.bean
-        if (!bean) bean = request.getAttribute(FORM_ATTRIBUTES).bean
-        String property = attrs.property;
-        String beanClassName = classNameWithoutPackage(bean.class.name)
-        Class propertyClass = bean.class.getMethod("get${property.capitalize()}").returnType
-        String propertyClassName = classNameWithoutPackage(propertyClass.name)
-        def messageCode = decapitalize("${beanClassName}.${property}.label")
-        def defaultMessage = camelCaseToSpacedWords(property)
-        def template = propertyClass.isEnum() ?
-            tryTemplate("field${mode}${propertyClassName}", "field${mode}Enum", "field${mode}") :
-            tryTemplate("field${mode}${propertyClassName}", "field${mode}")
-        out << render(
-                template: template,
-                model: [bean: bean, property: property, propertyClass: propertyClass, code: messageCode, defaultValue: defaultMessage])
+        String mode = request.getAttribute(FORM_ATTRIBUTES).mode
+        if (!attrs.visible || attrs.visible.split(",")*.trim().contains(mode)) {
+            mode = mode.capitalize()
+            Object bean = attrs.bean
+            if (!bean) bean = request.getAttribute(FORM_ATTRIBUTES).bean
+            String property = attrs.property;
+            String beanClassName = classNameWithoutPackage(bean.class.name)
+            Class propertyClass = bean.class.getMethod("get${property.capitalize()}").returnType
+            String propertyClassName = classNameWithoutPackage(propertyClass.name)
+            def messageCode = decapitalize("${beanClassName}.${property}.label")
+            def defaultMessage = camelCaseToSpacedWords(property)
+            def template = propertyClass.isEnum() ?
+                tryTemplate("field${mode}${propertyClassName}", "field${mode}Enum", "field${mode}") :
+                tryTemplate("field${mode}${propertyClassName}", "field${mode}")
+            out << render(
+                    template: template,
+                    model: [bean: bean, property: property, propertyClass: propertyClass, code: messageCode, defaultValue: defaultMessage])
+        }
     }
 
     private String tryTemplate(Object[] templates) {

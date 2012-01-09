@@ -27,7 +27,7 @@
 <body>
 
 <gform:form bean="${authorInstance}" mode="show">
-    <gform:field property="id"/>
+    <gform:field property="id" visible="show"/>
     <gform:field property="lastName"/>
     <gform:field property="firstName"/>
 
