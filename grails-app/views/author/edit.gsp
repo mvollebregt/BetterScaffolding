@@ -26,31 +26,33 @@
 
 <body>
 
-<gform:form bean="${authorInstance}" mode="edit">
-    <gform:field property="id" visible="show"/>
-    <gform:field property="lastName"/>
-    <gform:field property="firstName"/>
+<g:include view="author/show.gsp" params="[mode:'edit']"/>
 
-    <tr class="prop">
-        <td valign="top" class="name">
-            <label for="books"><g:message code="author.books.label" default="Books"/></label>
-        </td>
-        <td valign="top" class="value ${hasErrors(bean: authorInstance, field: 'books', 'errors')}">
+%{--<gform:form bean="${authorInstance}" mode="edit">--}%
+    %{--<gform:field property="id" visible="show"/>--}%
+    %{--<gform:field property="lastName"/>--}%
+    %{--<gform:field property="firstName"/>--}%
 
-            <ul>
-                <g:each in="${authorInstance?.books ?}" var="b">
-                    <li><g:link controller="book" action="show"
-                                id="${b.id}">${b?.encodeAsHTML()}</g:link></li>
-                </g:each>
-            </ul>
-            <g:link controller="book" action="create"
-                    params="['author.id': authorInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'book.label', default: 'Book')])}</g:link>
+    %{--<tr class="prop">--}%
+        %{--<td valign="top" class="name">--}%
+            %{--<label for="books"><g:message code="author.books.label" default="Books"/></label>--}%
+        %{--</td>--}%
+        %{--<td valign="top" class="value ${hasErrors(bean: authorInstance, field: 'books', 'errors')}">--}%
 
-        </td>
-    </tr>
+            %{--<ul>--}%
+                %{--<g:each in="${authorInstance?.books ?}" var="b">--}%
+                    %{--<li><g:link controller="book" action="show"--}%
+                                %{--id="${b.id}">${b?.encodeAsHTML()}</g:link></li>--}%
+                %{--</g:each>--}%
+            %{--</ul>--}%
+            %{--<g:link controller="book" action="create"--}%
+                    %{--params="['author.id': authorInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'book.label', default: 'Book')])}</g:link>--}%
 
-    <gform:field property="gender"/>
-</gform:form>
+        %{--</td>--}%
+    %{--</tr>--}%
+
+    %{--<gform:field property="gender"/>--}%
+%{--</gform:form>--}%
 
 </body>
 </html>

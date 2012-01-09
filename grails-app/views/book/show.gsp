@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<gform:form bean="${bookInstance}" mode="show">
+<gform:form bean="${bookInstance}" mode="${params.mode?:'show'}">
     <gform:field property="id" visible="show"/>
 
     <tr class="prop">
